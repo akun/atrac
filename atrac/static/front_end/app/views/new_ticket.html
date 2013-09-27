@@ -1,2 +1,119 @@
 <ng-include src="'views/nav.html'"></ng-include>
-<h2>新建任务</h2>
+
+<form class="form-horizontal">
+  <fieldset>
+    <legend>新建任务单</legend>
+    <div class="row">
+      <div class="span9">
+        <div class="control-group">
+          <label class="control-label" for="inputSummary">概述</label>
+          <div class="controls">
+            <input class="span8" type="text" id="inputSummary" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputDescription">描述</label>
+          <div class="controls">
+            <textarea class="span8" rows="10" id="inputDescription"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <div class="control-group">
+          <label class="control-label" for="inputType">类型</label>
+          <div class="controls">
+            <select id="inputType">
+              <option>缺陷</option>
+              <option>改进/建议</option>
+              <option>功能</option>
+              <option>支持</option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputMilestone">里程碑/目标版本</label>
+          <div class="controls">
+            <select id="inputMilestone">
+              <option>1.0.0</option>
+              <option>1.0.1</option>
+              <option>1.0.2</option>
+              <option>1.1.0</option>
+              <option>2.0.0</option>
+              <option>3.0.0</option>
+              <option>4.0.0</option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputVersion">当前版本</label>
+          <div class="controls">
+            <select id="inputVersion">
+              <option>1.0.0</option>
+              <option>1.0.1</option>
+              <option>1.0.2</option>
+              <option>1.1.0</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="span1"></div>
+      <div class="span4">
+        <div class="control-group">
+          <label class="control-label" for="inputParent">父任务</label>
+          <div class="controls">
+            <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputCategory">类别/组件</label>
+          <div class="controls">
+            <select id="inputCategory">
+              <option>模块1</option>
+              <option>模块2</option>
+              <option>模块3</option>
+              <option>模块4</option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputAssigned">指派给</label>
+          <div class="controls">
+            <select id="inputAssigned">
+              <option>&lt;&lt;我&gt;&gt;</option>
+              <option>user1</option>
+              <option>user2</option>
+              <option>user3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="span9">
+        <div class="control-group">
+          <label class="control-label" for="inputFile">附件</label>
+          <div class="controls">
+            <input type="file" id="inputFile" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputCC">抄送/跟踪者</label>
+          <div class="controls">
+            <label class="checkbox inline">
+              <input type="checkbox" id="inputCC1" value="option1">user1
+            </label>
+            <label class="checkbox inline">
+              <input type="checkbox" id="inputCC2" value="option2">user2
+            </label>
+            <label class="checkbox inline">
+              <input type="checkbox" id="inputCC3" value="option3">user3
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn">预览</button>
+      <button type="submit" class="btn btn-primary">创建</button>
+    </div>
+  </fieldset>
+</form>
