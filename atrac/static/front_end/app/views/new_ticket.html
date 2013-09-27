@@ -23,10 +23,7 @@
           <label class="control-label" for="inputType">类型</label>
           <div class="controls">
             <select id="inputType">
-              <option>缺陷</option>
-              <option>改进/建议</option>
-              <option>功能</option>
-              <option>支持</option>
+              <option ng-repeat="type in types">{{ type }}</option>
             </select>
           </div>
         </div>
@@ -34,13 +31,7 @@
           <label class="control-label" for="inputMilestone">里程碑/目标版本</label>
           <div class="controls">
             <select id="inputMilestone">
-              <option>1.0.0</option>
-              <option>1.0.1</option>
-              <option>1.0.2</option>
-              <option>1.1.0</option>
-              <option>2.0.0</option>
-              <option>3.0.0</option>
-              <option>4.0.0</option>
+              <option ng-repeat="milestone in milestones">{{ milestone }}</option>
             </select>
           </div>
         </div>
@@ -48,10 +39,7 @@
           <label class="control-label" for="inputVersion">当前版本</label>
           <div class="controls">
             <select id="inputVersion">
-              <option>1.0.0</option>
-              <option>1.0.1</option>
-              <option>1.0.2</option>
-              <option>1.1.0</option>
+              <option ng-repeat="version in versions">{{ version }}</option>
             </select>
           </div>
         </div>
@@ -68,10 +56,7 @@
           <label class="control-label" for="inputCategory">类别/组件</label>
           <div class="controls">
             <select id="inputCategory">
-              <option>模块1</option>
-              <option>模块2</option>
-              <option>模块3</option>
-              <option>模块4</option>
+              <option ng-repeat="category in categorys">{{ category }}</option>
             </select>
           </div>
         </div>
@@ -79,10 +64,7 @@
           <label class="control-label" for="inputAssigned">指派给</label>
           <div class="controls">
             <select id="inputAssigned">
-              <option>&lt;&lt;我&gt;&gt;</option>
-              <option>user1</option>
-              <option>user2</option>
-              <option>user3</option>
+              <option ng-repeat="assigned in assigneds">{{ assigned }}</option>
             </select>
           </div>
         </div>
@@ -97,14 +79,8 @@
         <div class="control-group">
           <label class="control-label" for="inputCC">抄送/跟踪者</label>
           <div class="controls">
-            <label class="checkbox inline">
-              <input type="checkbox" id="inputCC1" value="option1">user1
-            </label>
-            <label class="checkbox inline">
-              <input type="checkbox" id="inputCC2" value="option2">user2
-            </label>
-            <label class="checkbox inline">
-              <input type="checkbox" id="inputCC3" value="option3">user3
+            <label class="checkbox inline" ng-repeat="cc in ccs">
+              <input type="checkbox" id="inputCC{{ cc }}" value="{{ cc }}">{{ cc }}
             </label>
           </div>
         </div>
