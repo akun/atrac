@@ -1,0 +1,76 @@
+<form>
+  <fieldset>
+    <legend data-toggle="collapse" data-target="#filter">过滤</legend>
+    <div class="collapse in" id="filter">
+      <label class="checkbox inline">
+        <input type="checkbox" />状态
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend data-toggle="collapse" data-target="#show">显示</legend>
+    <div class="collapse" id="show">
+      <label class="checkbox inline">
+        <input type="checkbox" checked />摘要
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" checked />类型
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" checked />状态
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" checked />优先级
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" checked />指派给
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" checked />里程碑
+      </label>
+      <label class="checkbox inline">
+        <input type="checkbox" />分类/组件
+      </label>
+      <div class="control-group">
+        <label class="control-label" for="inputPassword">分组</label>
+        <div class="controls">
+          <select>
+            <option>类型</option>
+            <option>状态</option>
+            <option>优先级</option>
+            <option>里程碑</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<ng-include src="'views/paginator.html'"></ng-include>
+<table id="tickets" class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" /></th>
+      <th>#</th>
+      <th>类别</th>
+      <th>状态</th>
+      <th>优先级</th>
+      <th>摘要</th>
+      <th>指派给</th>
+      <th>里程碑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="ticket in tickets">
+      <td><input type="checkbox" /></td>
+      <td>{{ ticket.id }}</td>
+      <td>{{ ticket.type }}</td>
+      <td>{{ ticket.status }}</td>
+      <td>{{ ticket.priority }}</td>
+      <td>{{ ticket.summary }}</td>
+      <td>{{ ticket.assigned }}</td>
+      <td>{{ ticket.milestone }}</td>
+    </tr>
+  </tbody>
+</table>
+<ng-include src="'views/paginator.html'"></ng-include>
