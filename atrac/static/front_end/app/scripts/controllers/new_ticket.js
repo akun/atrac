@@ -1,7 +1,15 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .controller('NewTicketCtrl', function ($scope) {
+  .controller('NewTicketCtrl', function ($scope, $resource) {
+
+    $scope.save = function() {
+      var Ticket = $resource('/a/ticket/add/');
+      var ticket = new Ticket();
+      ticket.summary = $scope.ticket.summary;
+      ticket.$save()
+    }
+
     $scope.types = [
       '缺陷',
       '改进/建议',
