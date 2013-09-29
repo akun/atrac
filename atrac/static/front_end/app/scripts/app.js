@@ -11,6 +11,10 @@ angular.module('frontEndApp', [])
         templateUrl: 'views/new_ticket.html',
         controller: 'NewTicketCtrl'
       })
+      .when('/ticket/:id', {
+        templateUrl: 'views/ticket.html',
+        controller: 'TicketCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
