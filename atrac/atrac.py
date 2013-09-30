@@ -7,6 +7,8 @@ from tornado.options import define, options, parse_command_line
 import tornado.ioloop
 import tornado.web
 
+from db import connection
+
 
 define('port', default=8888, help='run on the given port', type=int)
 define('debug', default=False, help='run on the debug mode', type=bool)
@@ -20,6 +22,9 @@ class AddTicketHandler(tornado.web.RequestHandler):
     def post(self):
         json_in = tornado.escape.json_decode(self.request.body)
         summary = json_in['summary']
+        ticket = connection.Ticket()
+        ticket.summary = summary
+        ticket.save()
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': {'summary': summary}
         })
