@@ -6,7 +6,7 @@ angular.module('frontEndApp')
         return route === $location.path();
     };
   })
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, $resource) {
     $scope.tickets = [{
       'id': 10,
       'type': '缺陷',
@@ -96,4 +96,20 @@ angular.module('frontEndApp')
       'assigned': 'user1',
       'milestone': '2.0.0',
     }];
+
+    var Ticket = $resource('/a/ticket/list');
+    Ticket.query(function(tickets) {
+      $.map(tickets, function(ticket) {
+        $scope.tickets.push({
+          id: ticket.id,
+          type: '改进',
+          status: '分派',
+          priority: '低',
+          summary: ticket.summary,
+          assigned: 'user3',
+          milestone: '2.1.0'
+        });
+      });
+    });
+
   });
