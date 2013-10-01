@@ -4,6 +4,8 @@
 import os
 import time
 
+import pymongo
+
 from tornado.options import define, options, parse_command_line
 import tornado.ioloop
 import tornado.web
@@ -37,7 +39,9 @@ class AddTicketHandler(JsonHandler):
 class ListTicketHandler(JsonHandler):
 
     def get(self):
-        ticket_list = list(connection.Ticket.find()[:10])  # TOOD pagination
+        ticket_list = list(connection.Ticket.find().sort(
+            'created_at', pymongo.DESCENDING
+        )[:10])  # TOOD pagination
         for ticket in ticket_list:
             ticket['id'] = str(ticket._id)
             ticket.created_at = time.mktime(ticket.created_at.timetuple())
