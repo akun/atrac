@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .controller('NewTicketCtrl', function ($scope, $resource) {
+  .controller('NewTicketCtrl', function ($scope, $resource, $location) {
 
     $scope.save = function() {
       var Ticket = $resource('/a/ticket/add');
       var ticket = new Ticket();
       ticket.summary = $scope.ticket.summary;
       ticket.$save()
+      $location.path('/');
     }
 
     $scope.types = [
