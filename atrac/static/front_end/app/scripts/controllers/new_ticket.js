@@ -7,9 +7,9 @@ angular.module('frontEndApp')
       var Ticket = $resource('/a/ticket/add');
       var ticket = new Ticket();
       ticket.summary = $scope.ticket.summary;
-      ticket.$save()
+      ticket.$save();
       $location.path('/');
-    }
+    };
 
     $scope.types = [
       '缺陷',
