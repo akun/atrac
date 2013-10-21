@@ -7,6 +7,10 @@ angular.module('frontEndApp', ['ngResource'])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/source', {
+        templateUrl: 'views/source.html',
+        controller: 'SourceCtrl'
+      })
       .when('/new_ticket', {
         templateUrl: 'views/new_ticket.html',
         controller: 'NewTicketCtrl'
