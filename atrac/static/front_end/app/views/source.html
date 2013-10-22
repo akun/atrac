@@ -22,7 +22,7 @@
       <td>{{ item.log }}</td>
     </tr>
     <tr ng-show="item.isVisible" ng-repeat="subItem in item.subItems">
-      <td>&nbsp;&nbsp;<a href="#/source/file"><i class="icon-file"></i>{{ subItem.name }}</a></td>
+      <td>&nbsp;&nbsp;<a href="#/source/file/{{ subItem.name }}"><i class="icon-file"></i>{{ subItem.name }}</a></td>
       <td>{{ subItem.size }}</td>
       <td>{{ subItem.revision }}</td>
       <td>{{ subItem.age }}</td>

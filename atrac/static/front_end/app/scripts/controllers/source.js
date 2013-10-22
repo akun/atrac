@@ -22,7 +22,7 @@ angular.module('frontEndApp')
       log: 'code format'
     }];
 
-    $scope.toggle = function(item) {
+    $scope.toggle = function (item) {
       item.isVisible = item.isVisible == false ? true : false;
       item.subItems = [{
         subItems: [],
@@ -42,4 +42,13 @@ angular.module('frontEndApp')
         log: 'init'
       }];
     };
+  })
+  .controller('SourceFileCtrl', function ($scope) {
+    $scope.editorOptions = {
+      lineWrapping : true,
+      lineNumbers: true,
+      readOnly: 'nocursor',
+      mode: 'xml'
+    };
+    $scope.code = '<?php echo "Hello World"; ?>';
   });
