@@ -3,7 +3,7 @@
 angular.module('frontEndApp')
   .controller('NewTicketCtrl', function ($scope, $resource, $location) {
 
-    $scope.save = function() {
+    $scope.save = function () {
       var Ticket = $resource('/a/ticket/add');
       var ticket = new Ticket();
       ticket.summary = $scope.ticket.summary;

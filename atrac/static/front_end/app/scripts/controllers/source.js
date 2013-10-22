@@ -23,7 +23,7 @@ angular.module('frontEndApp')
     }];
 
     $scope.toggle = function (item) {
-      item.isVisible = item.isVisible == false ? true : false;
+      item.isVisible = item.isVisible === false ? true : false;
       item.subItems = [{
         subItems: [],
         name: 'README',
