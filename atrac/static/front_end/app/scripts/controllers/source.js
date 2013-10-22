@@ -4,31 +4,33 @@ angular.module('frontEndApp')
   .controller('SourceCtrl', function ($scope) {
     $scope.items = [{
       subItems: [],
+      isVisible: false,
       name: 'atrac',
       size: null,
       revision: '47b154c3ed',
       age: '3 days',
-      last_author: 'akun',
+      lastAuthor: 'akun',
       log: 'first commit'
     }, {
       subItems: [],
+      isVisible: false,
       name: 'mindmap',
       size: null,
       revision: '57b154c3ed',
       age: '1 day',
-      last_author: 'akun',
+      lastAuthor: 'akun',
       log: 'code format'
     }];
 
     $scope.toggle = function(item) {
-      console.log(item.name);
+      item.isVisible = item.isVisible == false ? true : false;
       item.subItems = [{
         subItems: [],
         name: 'README',
         size: '1K',
         revision: '58b154c3ed',
         age: '1 day',
-        last_author: 'akun',
+        lastAuthor: 'akun',
         log: 'init'
       }, {
         subItems: [],
@@ -36,7 +38,7 @@ angular.module('frontEndApp')
         size: '12K',
         revision: '58c154c3ed',
         age: '1 day',
-        last_author: 'akun',
+        lastAuthor: 'akun',
         log: 'init'
       }];
     };

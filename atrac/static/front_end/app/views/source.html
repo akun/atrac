@@ -18,15 +18,15 @@
       <td>{{ item.size }}</td>
       <td>{{ item.revision }}</td>
       <td>{{ item.age }}</td>
-      <td>{{ item.last_author }}</td>
+      <td>{{ item.lastAuthor }}</td>
       <td>{{ item.log }}</td>
     </tr>
-    <tr ng-repeat="subItem in item.subItems">
+    <tr ng-show="item.isVisible" ng-repeat="subItem in item.subItems">
       <td>&nbsp;&nbsp;<a href="#/source/file"><i class="icon-file"></i>{{ subItem.name }}</a></td>
       <td>{{ subItem.size }}</td>
       <td>{{ subItem.revision }}</td>
       <td>{{ subItem.age }}</td>
-      <td>{{ subItem.last_author }}</td>
+      <td>{{ subItem.lastAuthor }}</td>
       <td>{{ subItem.log }}</td>
     </tr>
   </tbody>
