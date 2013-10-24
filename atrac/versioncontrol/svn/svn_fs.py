@@ -6,7 +6,7 @@ import os
 from svn import fs, repos, core
 
 
-def get_file_from_svn_file(path, file_path, rev):
+def get_file(path, file_path, rev):
     path = core.svn_path_canonicalize(
         os.path.normpath(path).replace('\\', '/')
     )
@@ -25,7 +25,3 @@ def get_file_from_svn_file(path, file_path, rev):
         pass  # 'error'
 
     return content
-
-
-if __name__ == '__main__':
-    get_file_from_svn_file('/path/to/svn/server/folder/', 'file', 3)

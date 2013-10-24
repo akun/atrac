@@ -8,6 +8,7 @@ import tornado.ioloop
 import tornado.web
 
 from atrac.ticket import handlers as ticket_handlers
+from atrac.versioncontrol import handlers as vs_handlers
 
 
 define('port', default=8888, help='run on the given port', type=int)
@@ -20,6 +21,7 @@ def main():
         [
             (r'/a/ticket/add', ticket_handlers.AddTicketHandler),
             (r'/a/ticket/list', ticket_handlers.ListTicketHandler),
+            (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
         debug=options.debug,

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('frontEndApp', ['ngResource', 'ui.codemirror'])
+angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.codemirror'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -11,7 +11,7 @@ angular.module('frontEndApp', ['ngResource', 'ui.codemirror'])
         templateUrl: 'views/source.html',
         controller: 'SourceCtrl'
       })
-      .when('/source/file/:fileName', {
+      .when('/source/path/:path*', {
         templateUrl: 'views/source_file.html',
         controller: 'SourceFileCtrl'
       })

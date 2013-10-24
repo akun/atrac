@@ -27,6 +27,7 @@ angular.module('frontEndApp')
       item.subItems = [{
         subItems: [],
         name: 'README',
+        path: 'trunk/REAME',
         size: '1K',
         revision: '58b154c3ed',
         age: '1 day',
@@ -35,6 +36,7 @@ angular.module('frontEndApp')
       }, {
         subItems: [],
         name: '.jshint',
+        path: 'trunk/.jshint',
         size: '12K',
         revision: '58c154c3ed',
         age: '1 day',
@@ -43,12 +45,16 @@ angular.module('frontEndApp')
       }];
     };
   })
-  .controller('SourceFileCtrl', function ($scope) {
+  .controller('SourceFileCtrl', function ($scope, $routeParams, $resource) {
     $scope.editorOptions = {
       lineWrapping : true,
       lineNumbers: true,
       readOnly: 'nocursor',
       mode: 'xml'
     };
-    $scope.code = '<?php echo "Hello World"; ?>';
+
+    var Source = $resource('/a/source/file/:path',   {path: '@path'});
+    Source.get({path: $routeParams.path}, function (data) {
+      $scope.code = data.result.code;
+    });
   });
