@@ -1,25 +1,14 @@
 #!/usr/bin/env python
 
 
-import os
 import time
 
 import pymongo
 
-from tornado.options import define, options, parse_command_line
-import tornado.ioloop
-import tornado.web
+import tornado
 
-from db import connection
-
-
-define('port', default=8888, help='run on the given port', type=int)
-define('debug', default=False, help='run on the debug mode', type=bool)
-
-class JsonHandler(tornado.web.RequestHandler):
-
-    def set_default_headers(self):
-        self.set_header('Content-Type', 'application/json')
+from atrac.share import JsonHandler
+from atrac.db import connection
 
 
 class AddTicketHandler(JsonHandler):
@@ -48,21 +37,3 @@ class ListTicketHandler(JsonHandler):
             del ticket['_id']
         json_out = tornado.escape.json_encode(ticket_list)
         self.write(json_out)
-
-
-def main():
-    parse_command_line()
-    application = tornado.web.Application(
-        [
-            (r'/a/ticket/add', AddTicketHandler),
-            (r'/a/ticket/list', ListTicketHandler),
-        ],
-        static_path=os.path.join(os.path.dirname(__file__), 'static'),
-        debug=options.debug,
-    )
-    application.listen(options.port)
-    tornado.ioloop.IOLoop.instance().start()
-
-
-if __name__ == '__main__':
-    main()
