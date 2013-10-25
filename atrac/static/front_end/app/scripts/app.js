@@ -5,7 +5,15 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.codemirror'])
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'TicketListCtrl'
+      })
+      .when('/ticket/new', {
+        templateUrl: 'views/new_ticket.html',
+        controller: 'TicketAddCtrl'
+      })
+      .when('/ticket/:id', {
+        templateUrl: 'views/ticket.html',
+        controller: 'TicketCtrl'
       })
       .when('/source', {
         templateUrl: 'views/source.html',
@@ -14,14 +22,6 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.codemirror'])
       .when('/source/path/:path*', {
         templateUrl: 'views/source_file.html',
         controller: 'SourceFileCtrl'
-      })
-      .when('/new_ticket', {
-        templateUrl: 'views/new_ticket.html',
-        controller: 'NewTicketCtrl'
-      })
-      .when('/ticket/:id', {
-        templateUrl: 'views/ticket.html',
-        controller: 'TicketCtrl'
       })
       .otherwise({
         redirectTo: '/'

@@ -19,8 +19,8 @@ def main():
     parse_command_line()
     application = tornado.web.Application(
         [
-            (r'/a/ticket/add', ticket_handlers.AddTicketHandler),
-            (r'/a/ticket/list', ticket_handlers.ListTicketHandler),
+            (r'/a/ticket/add', ticket_handlers.TicketAddHandler),
+            (r'/a/ticket/list', ticket_handlers.TicketListHandler),
             (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
