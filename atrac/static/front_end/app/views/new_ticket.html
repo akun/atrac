@@ -8,13 +8,13 @@
         <div class="control-group">
           <label class="control-label" for="inputSummary">概述</label>
           <div class="controls">
-            <input class="span8" type="text" id="inputSummary" ng-model="ticket.summary" />
+            <input class="span8" type="text" id="inputSummary" ng-model="ticket.summary" required />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="inputDescription">描述</label>
           <div class="controls">
-            <textarea class="span8" rows="10" id="inputDescription"></textarea>
+            <textarea class="span8" rows="10" id="inputDescription" ng-model="ticket.description"></textarea>
           </div>
         </div>
       </div>
@@ -22,24 +22,24 @@
         <div class="control-group">
           <label class="control-label" for="inputType">类型</label>
           <div class="controls">
-            <select id="inputType">
-              <option ng-repeat="type in types">{{ type }}</option>
+            <select id="inputType" ng-model="ticket.type">
+              <option ng-repeat="type in types" ng-selected="type.default">{{ type.name }}</option>
             </select>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="inputMilestone">里程碑/目标版本</label>
           <div class="controls">
-            <select id="inputMilestone">
-              <option ng-repeat="milestone in milestones">{{ milestone }}</option>
+            <select id="inputMilestone" ng-model="ticket.milestone">
+              <option ng-repeat="milestone in milestones" ng-selected="milestone.default">{{ milestone.name }}</option>
             </select>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="inputVersion">当前版本</label>
           <div class="controls">
-            <select id="inputVersion">
-              <option ng-repeat="version in versions">{{ version }}</option>
+            <select id="inputVersion" ng-model="ticket.version">
+              <option ng-repeat="version in versions" ng-selected="version.default">{{ version.name }}</option>
             </select>
           </div>
         </div>
@@ -49,21 +49,21 @@
         <div class="control-group">
           <label class="control-label" for="inputParent">父任务</label>
           <div class="controls">
-            <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" />
+            <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" ng-model="ticket.parent" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="inputCategory">类别/组件</label>
           <div class="controls">
-            <select id="inputCategory">
-              <option ng-repeat="category in categorys">{{ category }}</option>
+            <select id="inputCategory" ng-model="ticket.category">
+              <option ng-repeat="category in categorys" ng-selected="category.default">{{ category.name }}</option>
             </select>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="inputAssigned">指派给</label>
           <div class="controls">
-            <select id="inputAssigned">
+            <select id="inputAssigned" ng-model="ticket.assigned">
               <option ng-repeat="assigned in assigneds">{{ assigned }}</option>
             </select>
           </div>
@@ -80,7 +80,7 @@
           <label class="control-label" for="inputCC">抄送/跟踪者</label>
           <div class="controls">
             <label class="checkbox inline" ng-repeat="cc in ccs">
-              <input type="checkbox" id="inputCC{{ cc }}" value="{{ cc }}">{{ cc }}
+              <input type="checkbox" id="inputCC{{ cc }}" value="{{ cc }}" ng-model="ticket.cc">{{ cc }}
             </label>
           </div>
         </div>

@@ -1,22 +1,34 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .controller('TicketAddCtrl', function ($scope, $resource, $location) {
-    var Ticket = $resource('/a/ticket/add')
+  .factory('TicketFactory', function ($resource) {
+      return $resource('/a/ticket/add', {}, {
+          create: {
+            method: 'POST'
+          }
+      });
+  })
+  .controller('TicketAddCtrl', function ($scope, $resource, TicketFactory, $location) {
+    var Ticket = $resource('/a/ticket/add');
+
     Ticket.get({}, function (data) {
-      $scope.types = data.result.types;
-      $scope.milestones = data.result.milestones;
-      $scope.versions = data.result.versions;
-      $scope.categorys = data.result.categorys;
+      $scope.ticket = {};
+      angular.forEach(['type', 'milestone', 'version', 'category'], function (item, i) {
+        var attrName = item + 's'
+        var attrValues = data.result[attrName];
+        angular.forEach(attrValues, function (v, i) {
+          if (v.default) {
+            $scope.ticket[item] = v.name;
+          }
+        });
+        $scope[attrName] = attrValues;
+      });
       $scope.assigneds = data.result.assigneds;
       $scope.ccs = data.result.ccs;
     });
 
     $scope.save = function () {
-      var Ticket = $resource('/a/ticket/add');
-      var ticket = new Ticket();
-      ticket.summary = $scope.ticket.summary;
-      ticket.$save();
+      TicketFactory.create($scope.ticket);
       $location.path('/');
     };
   })
