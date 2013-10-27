@@ -4,6 +4,8 @@
 
 import time
 
+from bson.objectid import ObjectId
+
 import pymongo
 
 import tornado
@@ -16,22 +18,7 @@ class TicketAddHandler(JsonHandler):
 
     def get(self):
         json_out = tornado.escape.json_encode({
-            'code': 0, 'msg': 'success', 'result': {
-                'types': list(connection.Type.find(fields={
-                    'name': 1, 'default': 1, '_id': 0,
-                })),
-                'milestones': list(connection.Milestone.find(fields={
-                    'name': 1, 'default': 1, '_id': 0,
-                })),
-                'versions': list(connection.Version.find(fields={
-                    'name': 1, 'default': 1, '_id': 0,
-                })),
-                'categorys': list(connection.Category.find(fields={
-                    'name': 1, 'default': 1, '_id': 0,
-                })),
-                'assigneds': [u'<<我>>', 'dev', 'test', 'ops'],
-                'ccs': ['dev', 'test', 'ops'],
-            }
+            'code': 0, 'msg': 'success', 'result': get_ticket_item_info()
         })
         self.write(json_out)
 
@@ -47,6 +34,32 @@ class TicketAddHandler(JsonHandler):
         self.write(json_out)
 
 
+class TicketEditHandler(JsonHandler):
+
+    def get(self, ticket_id):
+        ticket = connection.Ticket.find_one({'_id': ObjectId(ticket_id)})
+        serialize_json(ticket)
+        result = get_ticket_item_info()
+        result['ticket'] = ticket
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': result
+        })
+        self.write(json_out)
+
+    def post(self, ticket_id):
+        json_in = tornado.escape.json_decode(self.request.body)
+        ticket = connection.Ticket.find_one({'_id': ObjectId(ticket_id)})
+        for k, v in json_in.items():
+            if k in ('id', 'created_at'):
+                continue
+            ticket[k] = v
+        ticket.save()
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {}
+        })
+        self.write(json_out)
+
+
 class TicketListHandler(JsonHandler):
 
     def get(self):
@@ -54,8 +67,31 @@ class TicketListHandler(JsonHandler):
             'created_at', pymongo.DESCENDING
         ))  # TOOD pagination
         for ticket in ticket_list:
-            ticket['id'] = str(ticket._id)
-            ticket.created_at = time.mktime(ticket.created_at.timetuple())
-            del ticket['_id']
+            serialize_json(ticket)
         json_out = tornado.escape.json_encode(ticket_list)
         self.write(json_out)
+
+
+def serialize_json(ticket):
+    ticket['id'] = str(ticket._id)
+    ticket.created_at = time.mktime(ticket.created_at.timetuple())
+    del ticket['_id']
+
+
+def get_ticket_item_info():
+    return {
+        'types': list(connection.Type.find(fields={
+            'name': 1, 'default': 1, '_id': 0,
+        })),
+        'milestones': list(connection.Milestone.find(fields={
+            'name': 1, 'default': 1, '_id': 0,
+        })),
+        'versions': list(connection.Version.find(fields={
+            'name': 1, 'default': 1, '_id': 0,
+        })),
+        'categorys': list(connection.Category.find(fields={
+            'name': 1, 'default': 1, '_id': 0,
+        })),
+        'assigneds': [u'<<我>>', 'dev', 'test', 'ops'],
+        'ccs': ['dev', 'test', 'ops'],
+    }

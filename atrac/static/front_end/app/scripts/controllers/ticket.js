@@ -8,6 +8,14 @@ angular.module('frontEndApp')
           }
       });
   })
+  .factory('TicketEditFactory', function ($resource) {
+      return $resource('/a/ticket/edit/:id', {}, {
+          edit: {
+            method: 'POST',
+            params: {id: '@id'}
+          }
+      });
+  })
   .controller('TicketAddCtrl', function ($scope, $resource, TicketFactory, $location) {
     var Ticket = $resource('/a/ticket/add');
 
@@ -32,14 +40,20 @@ angular.module('frontEndApp')
       $location.path('/');
     };
   })
-  .controller('TicketCtrl', function ($scope) {
-    $scope.ticket = {
-      id: 10,
-      summary: '添加可以预览',
-      reporter: 'user4',
-      assigned: 'user2',
-      description: '需要解析格式的文字'
-    };
+  .controller('TicketEditCtrl', function ($scope, $resource, $routeParams, TicketEditFactory, $location) {
+    var Ticket = $resource('/a/ticket/edit/:id');
+    Ticket.get({id: $routeParams.id}, function (data) {
+      $scope.ticket = data.result.ticket;
+      angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName, i) {
+        $scope[attrName] = data.result[attrName];
+      });
+      $scope.assigneds = data.result.assigneds;
+      $scope.ccs = data.result.ccs;
+      $scope.save = function () {
+        TicketEditFactory.edit($scope.ticket);
+        $location.path('/');
+      };
+    });
   })
   .controller('TicketListCtrl', function ($scope, $resource) {
     $scope.tickets = [];
