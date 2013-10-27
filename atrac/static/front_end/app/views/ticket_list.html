@@ -63,11 +63,11 @@
   <tbody>
     <tr ng-repeat="ticket in tickets">
       <td><input type="checkbox" /></td>
-      <td><a href="#/ticket/{{ ticket.id }}">{{ ticket.id }}</a></td>
+      <td><a href="#/ticket/show/{{ ticket.id }}">{{ ticket.id }}</a></td>
       <td>{{ ticket.type }}</td>
       <td>{{ ticket.status }}</td>
       <td>{{ ticket.priority }}</td>
-      <td><a href="#/ticket/{{ ticket.id }}">{{ ticket.summary }}</a></td>
+      <td><a href="#/ticket/show/{{ ticket.id }}">{{ ticket.summary }}</a></td>
       <td>{{ ticket.assigned }}</td>
       <td>{{ ticket.milestone }}</td>
     </tr>

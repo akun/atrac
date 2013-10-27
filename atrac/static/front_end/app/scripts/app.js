@@ -11,7 +11,7 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.codemirror'])
         templateUrl: 'views/new_ticket.html',
         controller: 'TicketAddCtrl'
       })
-      .when('/ticket/:id', {
+      .when('/ticket/show/:id', {
         templateUrl: 'views/ticket.html',
         controller: 'TicketCtrl'
       })
