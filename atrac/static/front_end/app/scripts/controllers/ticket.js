@@ -44,6 +44,7 @@ angular.module('frontEndApp')
     var Ticket = $resource('/a/ticket/edit/:id');
     Ticket.get({id: $routeParams.id}, function (data) {
       $scope.ticket = data.result.ticket;
+      $scope.ticket['short_id'] = $scope.ticket.id.substring(18, 24);
       angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName, i) {
         $scope[attrName] = data.result[attrName];
       });
@@ -62,12 +63,13 @@ angular.module('frontEndApp')
       angular.forEach(tickets, function (ticket) {
         this.push({
           id: ticket.id,
+          short_id: ticket.id.substring(18, 24),
           type: '改进',
           status: '分派',
           priority: '低',
           summary: ticket.summary,
           assigned: 'user3',
-          milestone: '2.1.0'
+          milestone: ticket.milestone
         });
       }, $scope.tickets);
     });
