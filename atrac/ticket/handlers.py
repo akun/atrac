@@ -62,13 +62,22 @@ class TicketEditHandler(JsonHandler):
 
 class TicketListHandler(JsonHandler):
 
-    def get(self):
-        ticket_list = list(connection.Ticket.find().sort(
+    def get(self, page, limit):
+        page, limit = int(page), int(limit)
+        count = connection.Ticket.find().count()
+        bottom = (page - 1) * limit
+        top = bottom + limit
+        if top >= count:
+            top = count
+
+        tickets = list(connection.Ticket.find().sort(
             'created_at', pymongo.DESCENDING
-        ))  # TOOD pagination
-        for ticket in ticket_list:
+        )[bottom:top])
+        for ticket in tickets:
             serialize_json(ticket)
-        json_out = tornado.escape.json_encode(ticket_list)
+        json_out = tornado.escape.json_encode({
+            'tickets': tickets, 'count': count,
+        })
         self.write(json_out)
 
 

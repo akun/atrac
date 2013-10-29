@@ -56,21 +56,34 @@ angular.module('frontEndApp')
       };
     });
   })
-  .controller('TicketListCtrl', function ($scope, $resource) {
+  .controller('TicketListCtrl', function ($scope, $resource, $routeParams) {
     $scope.tickets = [];
-    var Ticket = $resource('/a/ticket/list');
-    Ticket.query(function (tickets) {
-      angular.forEach(tickets, function (ticket) {
-        this.push({
-          id: ticket.id,
-          short_id: ticket.id.substring(18, 24),
-          type: '改进',
-          status: '分派',
-          priority: '低',
-          summary: ticket.summary,
-          assigned: 'user3',
-          milestone: ticket.milestone
-        });
-      }, $scope.tickets);
-    });
+    $scope.currentPage = 1;
+    $scope.perPage = 20;
+    $scope.maxSize = 5;
+    var showTable = function() {
+      var Ticket = $resource('/a/ticket/list/:page/:limit');
+      Ticket.get({page: $scope.currentPage, limit: $scope.perPage}, function (data) {
+        $scope.totalItems = data.count;
+        $scope.tickets = [];
+        angular.forEach(data.tickets, function (ticket) {
+          this.push({
+            id: ticket.id,
+            short_id: ticket.id.substring(18, 24),
+            type: '改进',
+            status: '分派',
+            priority: '低',
+            summary: ticket.summary,
+            assigned: 'user3',
+            milestone: ticket.milestone
+          });
+        }, $scope.tickets);
+      });
+    };
+
+    $scope.selectPage = function (page) {
+      $scope.currentPage = page;
+      showTable();
+    };
+    showTable();
   });

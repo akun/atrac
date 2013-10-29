@@ -11,6 +11,7 @@
     "angular-resource": "~1.0.7",
     "angular-cookies": "~1.0.7",
     "angular-sanitize": "~1.0.7",
+    "angular-bootstrap": "~0.6.0",
     "angular-ui-codemirror": "~0.0.5"
   },
   "devDependencies": {

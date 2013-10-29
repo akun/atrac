@@ -21,7 +21,7 @@ def main():
         [
             (r'/a/ticket/add', ticket_handlers.TicketAddHandler),
             (r'/a/ticket/edit/(?P<ticket_id>.*)', ticket_handlers.TicketEditHandler),
-            (r'/a/ticket/list', ticket_handlers.TicketListHandler),
+            (r'/a/ticket/list/(?P<page>.*)/(?P<limit>.*)', ticket_handlers.TicketListHandler),
             (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
