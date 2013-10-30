@@ -70,11 +70,11 @@ angular.module('frontEndApp')
           this.push({
             id: ticket.id,
             short_id: ticket.id.substring(18, 24),
-            type: '改进',
+            type: ticket.type,
             status: '分派',
             priority: '低',
             summary: ticket.summary,
-            assigned: 'user3',
+            assigned: ticket.assigned,
             milestone: ticket.milestone
           });
         }, $scope.tickets);
