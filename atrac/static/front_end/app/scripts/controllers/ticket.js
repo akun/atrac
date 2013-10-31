@@ -86,4 +86,9 @@ angular.module('frontEndApp')
       showTable();
     };
     showTable();
+
+    $scope.ticketIds = {};
+    $scope.selectRow = function (ticketId) {
+      $scope.ticketIds[ticketId] = $scope.ticketIds[ticketId] === true ? false : true;
+    };
   });

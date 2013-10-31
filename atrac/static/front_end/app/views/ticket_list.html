@@ -51,7 +51,7 @@
   <table id="tickets" class="table table-hover table-condensed">
     <thead>
       <tr>
-        <th><input type="checkbox" /></th>
+        <th></th>
         <th>#</th>
         <th>类别</th>
         <th>状态</th>
@@ -62,8 +62,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="ticket in tickets">
-        <td><input type="checkbox" /></td>
+      <tr ng-repeat="ticket in tickets" ng-class="{info: ticketIds[ticket.id]}" ng-click="selectRow(ticket.id)">
+        <td><input type="checkbox" value="{{ ticket.id }}" ng-checked="ticketIds[ticket.id]" /></td>
         <td><a href="#/ticket/edit/{{ ticket.id }}">#{{ ticket.short_id }}</a></td>
         <td>{{ ticket.type }}</td>
         <td>{{ ticket.status }}</td>
