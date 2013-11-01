@@ -87,8 +87,32 @@ angular.module('frontEndApp')
     };
     showTable();
 
-    $scope.ticketIds = {};
-    $scope.selectRow = function (ticketId) {
-      $scope.ticketIds[ticketId] = $scope.ticketIds[ticketId] === true ? false : true;
+    $scope.rowIds = {};
+    $scope.firstRowId = null;
+    $scope.lastRowId = null;
+    $scope.selectRow = function ($event, $index) {
+      if ($scope.firstRowId === null) {
+        $scope.firstRowId = $index;
+      }
+      if ($event.shiftKey) {
+        $scope.lastRowId = $index;
+
+        $scope.rowIds = [];
+        var start = Math.min($scope.firstRowId, $scope.lastRowId);
+        var end = Math.max($scope.firstRowId, $scope.lastRowId);
+        for (var i = start; i <= end; i++) {
+          $scope.rowIds[i] = true;
+        }
+      } else {
+        $scope.firstRowId = $index;
+        $scope.lastRowId = null;
+
+        if ($event.ctrlKey || angular.element($event.target).is('input[type="checkbox"]')) {
+          $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
+        } else {
+          $scope.rowIds = [];
+          $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
+        }
+      }
     };
   });
