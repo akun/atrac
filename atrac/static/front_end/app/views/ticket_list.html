@@ -46,6 +46,16 @@
   </fieldset>
 </form>
 
+<div id="options">
+  <ul class="dropdown-menu">
+    <li><a href="#">指派给</a></li>
+    <li><a href="#">目标版本</a></li>
+    <li><a href="#">里程碑</a></li>
+    <li class="divider"></li>
+    <li><a href="#">删除</a></li>
+  </ul>
+</div>
+
 <div ng-controller="TicketListCtrl">
   <pagination boundary-links="true" total-items="totalItems" page="currentPage" max-size="maxSize" items-per-page="perPage" on-select-page="selectPage(page)" rotate="false" class="pagination pagination-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
   <table id="tickets" class="table table-hover table-condensed">
@@ -62,7 +72,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="ticket in tickets" ng-class="{info: rowIds[$index]}" ng-click="selectRow($event, $index)">
+      <tr ng-repeat="ticket in tickets" ng-class="{info: rowIds[$index]}" ng-click="selectRow($event, $index)" ng-right-click="showOptions($event, $index)">
         <td><input type="checkbox" value="{{ ticket.id }}" ng-checked="rowIds[$index]" /></td>
         <td><a href="#/ticket/edit/{{ ticket.id }}">#{{ ticket.short_id }}</a></td>
         <td>{{ ticket.type }}</td>

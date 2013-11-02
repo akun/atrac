@@ -16,6 +16,17 @@ angular.module('frontEndApp')
           }
       });
   })
+  .directive('ngRightClick', function($parse) {
+    return function(scope, element, attrs) {
+      var fn = $parse(attrs.ngRightClick);
+      element.bind('contextmenu', function (event) {
+        scope.$apply(function () {
+          event.preventDefault();
+          fn(scope, {$event: event});
+        });
+      });
+    };
+  })
   .controller('TicketAddCtrl', function ($scope, $resource, TicketFactory, $location) {
     var Ticket = $resource('/a/ticket/add');
 
@@ -57,6 +68,7 @@ angular.module('frontEndApp')
     });
   })
   .controller('TicketListCtrl', function ($scope, $resource, $routeParams) {
+    //Pagination
     $scope.tickets = [];
     $scope.currentPage = 1;
     $scope.perPage = 20;
@@ -87,9 +99,16 @@ angular.module('frontEndApp')
     };
     showTable();
 
+    var options = angular.element('#options');
+
+    // Checkbox Select / Shift Select / Ctrl Select
     $scope.rowIds = {};
     $scope.firstRowId = null;
     $scope.lastRowId = null;
+    var singleSelect = function ($index) {
+      $scope.rowIds = [];
+      $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
+    };
     $scope.selectRow = function ($event, $index) {
       if ($scope.firstRowId === null) {
         $scope.firstRowId = $index;
@@ -110,9 +129,18 @@ angular.module('frontEndApp')
         if ($event.ctrlKey || angular.element($event.target).is('input[type="checkbox"]')) {
           $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
         } else {
-          $scope.rowIds = [];
-          $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
+          singleSelect($index);
         }
       }
+      options.hide();
+    };
+
+    // Batch Options
+    $scope.showOptions = function ($event, $index) {
+      singleSelect($index);
+
+      options.css('left', $event.pageX);
+      options.css('top', $event.pageY);
+      options.show();
     };
   });
