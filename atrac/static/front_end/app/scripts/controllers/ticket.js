@@ -145,7 +145,9 @@ angular.module('frontEndApp')
 
     // Batch Options
     $scope.showOptions = function ($event, $index) {
-      singleSelect($index);
+      if ($scope.rowIds[$index] !== true) {
+        singleSelect($index);
+      }
 
       options.css('left', $event.pageX);
       options.css('top', $event.pageY);
@@ -159,6 +161,6 @@ angular.module('frontEndApp')
         this.push(angular.element(checkbox).val());
       }, tickedIds);
       TicketDeleteFactory.delete(tickedIds.join());
-      $location.path('/');
+      $location.path('/ok');
     };
   });
