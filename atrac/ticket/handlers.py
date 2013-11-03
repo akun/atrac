@@ -34,6 +34,17 @@ class TicketAddHandler(JsonHandler):
         self.write(json_out)
 
 
+class TicketDeleteHandler(JsonHandler):
+
+    def post(self):
+        ticket_ids = [ObjectId(i) for i in self.request.body.split(',')]
+        connection.Ticket.collection.remove({'_id': {'$in': ticket_ids}})
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {}
+        })
+        self.write(json_out)
+
+
 class TicketEditHandler(JsonHandler):
 
     def get(self, ticket_id):

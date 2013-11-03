@@ -16,6 +16,14 @@ angular.module('frontEndApp')
           }
       });
   })
+  .factory('TicketDeleteFactory', function ($resource) {
+      return $resource('/a/ticket/delete/:ids', {}, {
+          delete: {
+            method: 'POST',
+            params: {ids: '@ids'}
+          }
+      });
+  })
   .directive('ngRightClick', function($parse) {
     return function(scope, element, attrs) {
       var fn = $parse(attrs.ngRightClick);
@@ -67,7 +75,7 @@ angular.module('frontEndApp')
       };
     });
   })
-  .controller('TicketListCtrl', function ($scope, $resource, $routeParams) {
+  .controller('TicketListCtrl', function ($scope, $resource, $routeParams, TicketDeleteFactory, $location) {
     //Pagination
     $scope.tickets = [];
     $scope.currentPage = 1;
@@ -142,5 +150,15 @@ angular.module('frontEndApp')
       options.css('left', $event.pageX);
       options.css('top', $event.pageY);
       options.show();
+    };
+
+    // remove
+    $scope.removeTickets = function () {
+      var tickedIds = [];
+      angular.forEach(angular.element('table input[type="checkbox"]:checked'), function (checkbox) {
+        this.push(angular.element(checkbox).val());
+      }, tickedIds);
+      TicketDeleteFactory.delete(tickedIds.join());
+      $location.path('/');
     };
   });
