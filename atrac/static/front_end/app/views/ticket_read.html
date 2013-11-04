@@ -56,7 +56,7 @@
   </ul>
 </div>
 
-<div ng-controller="TicketListCtrl">
+<div ng-controller="TicketReadCtrl">
   <pagination boundary-links="true" total-items="totalItems" page="currentPage" max-size="maxSize" items-per-page="perPage" on-select-page="selectPage(page)" rotate="false" class="pagination pagination-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
   <table id="tickets" class="table table-hover table-condensed">
     <thead>
@@ -74,11 +74,11 @@
     <tbody>
       <tr ng-repeat="ticket in tickets" ng-class="{info: rowIds[$index]}" ng-click="selectRow($event, $index)" ng-right-click="showOptions($event, $index)">
         <td><input type="checkbox" value="{{ ticket.id }}" ng-checked="rowIds[$index]" /></td>
-        <td><a href="#/ticket/edit/{{ ticket.id }}">#{{ ticket.short_id }}</a></td>
+        <td><a href="#/ticket/update/{{ ticket.id }}">#{{ ticket.short_id }}</a></td>
         <td>{{ ticket.type }}</td>
         <td>{{ ticket.status }}</td>
         <td>{{ ticket.priority }}</td>
-        <td><a href="#/ticket/edit/{{ ticket.id }}">{{ ticket.summary }}</a></td>
+        <td><a href="#/ticket/update/{{ ticket.id }}">{{ ticket.summary }}</a></td>
         <td>{{ ticket.assigned }}</td>
         <td>{{ ticket.milestone }}</td>
       </tr>

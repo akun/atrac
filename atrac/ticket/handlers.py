@@ -14,7 +14,7 @@ from atrac.share import JsonHandler
 from atrac.db import connection
 
 
-class TicketAddHandler(JsonHandler):
+class TicketCreateHandler(JsonHandler):
 
     def get(self):
         json_out = tornado.escape.json_encode({
@@ -34,18 +34,28 @@ class TicketAddHandler(JsonHandler):
         self.write(json_out)
 
 
-class TicketDeleteHandler(JsonHandler):
+class TicketReadHandler(JsonHandler):
 
-    def post(self):
-        ticket_ids = [ObjectId(i) for i in self.request.body.split(',')]
-        connection.Ticket.collection.remove({'_id': {'$in': ticket_ids}})
+    def get(self, page, limit):
+        page, limit = int(page), int(limit)
+        count = connection.Ticket.find().count()
+        bottom = (page - 1) * limit
+        top = bottom + limit
+        if top >= count:
+            top = count
+
+        tickets = list(connection.Ticket.find().sort(
+            'created_at', pymongo.DESCENDING
+        )[bottom:top])
+        for ticket in tickets:
+            serialize_json(ticket)
         json_out = tornado.escape.json_encode({
-            'code': 0, 'msg': 'success', 'result': {}
+            'tickets': tickets, 'count': count,
         })
         self.write(json_out)
 
 
-class TicketEditHandler(JsonHandler):
+class TicketUpdateHandler(JsonHandler):
 
     def get(self, ticket_id):
         ticket = connection.Ticket.find_one({'_id': ObjectId(ticket_id)})
@@ -71,23 +81,13 @@ class TicketEditHandler(JsonHandler):
         self.write(json_out)
 
 
-class TicketListHandler(JsonHandler):
+class TicketDeleteHandler(JsonHandler):
 
-    def get(self, page, limit):
-        page, limit = int(page), int(limit)
-        count = connection.Ticket.find().count()
-        bottom = (page - 1) * limit
-        top = bottom + limit
-        if top >= count:
-            top = count
-
-        tickets = list(connection.Ticket.find().sort(
-            'created_at', pymongo.DESCENDING
-        )[bottom:top])
-        for ticket in tickets:
-            serialize_json(ticket)
+    def post(self):
+        ticket_ids = [ObjectId(i) for i in self.request.body.split(',')]
+        connection.Ticket.collection.remove({'_id': {'$in': ticket_ids}})
         json_out = tornado.escape.json_encode({
-            'tickets': tickets, 'count': count,
+            'code': 0, 'msg': 'success', 'result': {}
         })
         self.write(json_out)
 

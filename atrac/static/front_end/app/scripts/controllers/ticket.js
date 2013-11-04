@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .factory('TicketFactory', function ($resource) {
-      return $resource('/a/ticket/add', {}, {
+  .factory('TicketCreateFactory', function ($resource) {
+      return $resource('/a/ticket/create', {}, {
           create: {
             method: 'POST'
           }
       });
   })
-  .factory('TicketEditFactory', function ($resource) {
-      return $resource('/a/ticket/edit/:id', {}, {
-          edit: {
+  .factory('TicketUpdateFactory', function ($resource) {
+      return $resource('/a/ticket/update/:id', {}, {
+          update: {
             method: 'POST',
             params: {id: '@id'}
           }
@@ -35,8 +35,8 @@ angular.module('frontEndApp')
       });
     };
   })
-  .controller('TicketAddCtrl', function ($scope, $resource, TicketFactory, $location) {
-    var Ticket = $resource('/a/ticket/add');
+  .controller('TicketCreateCtrl', function ($scope, $resource, TicketCreateFactory, $location) {
+    var Ticket = $resource('/a/ticket/create');
 
     Ticket.get({}, function (data) {
       $scope.ticket = {};
@@ -55,34 +55,18 @@ angular.module('frontEndApp')
     });
 
     $scope.save = function () {
-      TicketFactory.create($scope.ticket);
+      TicketCreateFactory.create($scope.ticket);
       $location.path('/');
     };
   })
-  .controller('TicketEditCtrl', function ($scope, $resource, $routeParams, TicketEditFactory, $location) {
-    var Ticket = $resource('/a/ticket/edit/:id');
-    Ticket.get({id: $routeParams.id}, function (data) {
-      $scope.ticket = data.result.ticket;
-      $scope.ticket['short_id'] = $scope.ticket.id.substring(18, 24);
-      angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName, i) {
-        $scope[attrName] = data.result[attrName];
-      });
-      $scope.assigneds = data.result.assigneds;
-      $scope.ccs = data.result.ccs;
-      $scope.save = function () {
-        TicketEditFactory.edit($scope.ticket);
-        $location.path('/');
-      };
-    });
-  })
-  .controller('TicketListCtrl', function ($scope, $resource, $routeParams, TicketDeleteFactory, $location) {
+  .controller('TicketReadCtrl', function ($scope, $resource, $routeParams, TicketDeleteFactory, $location) {
     //Pagination
     $scope.tickets = [];
     $scope.currentPage = 1;
     $scope.perPage = 20;
     $scope.maxSize = 5;
     var showTable = function() {
-      var Ticket = $resource('/a/ticket/list/:page/:limit');
+      var Ticket = $resource('/a/ticket/read/:page/:limit');
       Ticket.get({page: $scope.currentPage, limit: $scope.perPage}, function (data) {
         $scope.totalItems = data.count;
         $scope.tickets = [];
@@ -163,4 +147,20 @@ angular.module('frontEndApp')
       TicketDeleteFactory.delete(tickedIds.join());
       $location.path('/ok');
     };
+  })
+  .controller('TicketUpdateCtrl', function ($scope, $resource, $routeParams, TicketUpdateFactory, $location) {
+    var Ticket = $resource('/a/ticket/update/:id');
+    Ticket.get({id: $routeParams.id}, function (data) {
+      $scope.ticket = data.result.ticket;
+      $scope.ticket['short_id'] = $scope.ticket.id.substring(18, 24);
+      angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName, i) {
+        $scope[attrName] = data.result[attrName];
+      });
+      $scope.assigneds = data.result.assigneds;
+      $scope.ccs = data.result.ccs;
+      $scope.save = function () {
+        TicketUpdateFactory.update($scope.ticket);
+        $location.path('/');
+      };
+    });
   });

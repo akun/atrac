@@ -3,17 +3,17 @@
 angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.codemirror'])
   .config(function ($routeProvider) {
     $routeProvider
+      .when('/ticket/create', {
+        templateUrl: 'views/ticket_create.html',
+        controller: 'TicketCreateCtrl'
+      })
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'TicketListCtrl'
+        controller: 'TicketReadCtrl'
       })
-      .when('/ticket/new', {
-        templateUrl: 'views/new_ticket.html',
-        controller: 'TicketAddCtrl'
-      })
-      .when('/ticket/edit/:id', {
-        templateUrl: 'views/edit_ticket.html',
-        controller: 'TicketEditCtrl'
+      .when('/ticket/update/:id', {
+        templateUrl: 'views/ticket_update.html',
+        controller: 'TicketUpdateCtrl'
       })
       .when('/source', {
         templateUrl: 'views/source.html',
