@@ -15,8 +15,7 @@ define('port', default=8888, help='run on the given port', type=int)
 define('debug', default=False, help='run on the debug mode', type=bool)
 
 
-def main():
-    parse_command_line()
+def get_application():
     application = tornado.web.Application(
         [
             (r'/a/ticket/create', ticket_handlers.TicketCreateHandler),
@@ -29,6 +28,12 @@ def main():
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
         debug=options.debug,
     )
+    return application
+
+
+def main():
+    parse_command_line()
+    application = get_application()
     application.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
 

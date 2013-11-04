@@ -25,4 +25,5 @@ setup(
         'tornado==3.1.1',
         'mongokit==0.9.0',
     ],
+    test_suite='atrac.tests.suite',
 )
