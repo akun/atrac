@@ -62,7 +62,7 @@ angular.module('frontEndApp')
       $location.path('/');
     };
   })
-  .controller('TicketReadCtrl', function ($scope, $resource, $routeParams, TicketDeleteFactory, $location) {
+  .controller('TicketReadCtrl', function ($scope, $resource, $location) {
     //Pagination
     $scope.tickets = [];
     $scope.currentPage = 1;
@@ -144,16 +144,6 @@ angular.module('frontEndApp')
       options.css('top', $event.pageY);
       options.show();
     };
-
-    // Delete
-    $scope.removeTickets = function () {
-      var tickedIds = [];
-      angular.forEach(angular.element('table input[type="checkbox"]:checked'), function (checkbox) {
-        this.push(angular.element(checkbox).val());
-      }, tickedIds);
-      TicketDeleteFactory.delete(tickedIds.join());
-      $location.path('/ok');
-    };
   })
   .controller('TicketUpdateCtrl', function ($scope, $resource, $routeParams, TicketUpdateFactory, $location) {
     var Ticket = $resource('/a/ticket/update/:id');
@@ -170,4 +160,14 @@ angular.module('frontEndApp')
         $location.path('/');
       };
     });
+  })
+  .controller('TicketMenuCtrl', function ($scope, TicketDeleteFactory, $location) {
+    $scope.deleteTickets = function () {
+      var tickedIds = [];
+      angular.forEach(angular.element('table input[type="checkbox"]:checked'), function (checkbox) {
+        this.push(angular.element(checkbox).val());
+      }, tickedIds);
+      TicketDeleteFactory.delete(tickedIds.join());
+      $location.path('/ok');
+    };
   });
