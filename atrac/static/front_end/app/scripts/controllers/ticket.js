@@ -28,6 +28,9 @@ angular.module('frontEndApp')
     return function(scope, element, attrs) {
       var fn = $parse(attrs.ngRightClick);
       element.bind('contextmenu', function (event) {
+        if (angular.element(event.target).is('a')) {
+          return
+        }
         scope.$apply(function () {
           event.preventDefault();
           fn(scope, {$event: event});
@@ -102,6 +105,10 @@ angular.module('frontEndApp')
       $scope.rowIds[$index] = $scope.rowIds[$index] === true ? false : true;
     };
     $scope.selectRow = function ($event, $index) {
+      if (angular.element($event.target).is('a')) {
+        return
+      }
+
       if ($scope.firstRowId === null) {
         $scope.firstRowId = $index;
       }
@@ -138,7 +145,7 @@ angular.module('frontEndApp')
       options.show();
     };
 
-    // remove
+    // Delete
     $scope.removeTickets = function () {
       var tickedIds = [];
       angular.forEach(angular.element('table input[type="checkbox"]:checked'), function (checkbox) {
