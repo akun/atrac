@@ -148,8 +148,8 @@ angular.module('frontEndApp')
   .controller('TicketUpdateCtrl', function ($scope, $resource, $routeParams, TicketUpdateFactory, $location) {
     var Ticket = $resource('/a/ticket/update/:id');
     Ticket.get({id: $routeParams.id}, function (data) {
+      data.result.ticket.shortId = data.result.ticket.id.substring(18, 24);
       $scope.ticket = data.result.ticket;
-      $scope.ticket['shortId'] = $scope.ticket.id.substring(18, 24);
       angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName) {
         $scope[attrName] = data.result[attrName];
       });
