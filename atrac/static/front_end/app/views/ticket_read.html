@@ -68,7 +68,7 @@
     <tbody>
       <tr ng-repeat="ticket in tickets" ng-class="{info: rowIds[$index]}" ng-click="selectRow($event, $index)" ng-right-click="showOptions($event, $index)">
         <td><input type="checkbox" value="{{ ticket.id }}" ng-checked="rowIds[$index]" /></td>
-        <td><a href="#/ticket/update/{{ ticket.id }}">#{{ ticket.short_id }}</a></td>
+        <td><a href="#/ticket/update/{{ ticket.id }}">#{{ ticket.shortId }}</a></td>
         <td>{{ ticket.type }}</td>
         <td>{{ ticket.status }}</td>
         <td>{{ ticket.priority }}</td>

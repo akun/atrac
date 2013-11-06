@@ -2,34 +2,34 @@
 
 angular.module('frontEndApp')
   .factory('TicketCreateFactory', function ($resource) {
-      return $resource('/a/ticket/create', {}, {
-          create: {
-            method: 'POST'
-          }
-      });
+    return $resource('/a/ticket/create', {}, {
+      create: {
+        method: 'POST'
+      }
+    });
   })
   .factory('TicketUpdateFactory', function ($resource) {
-      return $resource('/a/ticket/update/:id', {}, {
-          update: {
-            method: 'POST',
-            params: {id: '@id'}
-          }
-      });
+    return $resource('/a/ticket/update/:id', {}, {
+      update: {
+        method: 'POST',
+        params: {id: '@id'}
+      }
+    });
   })
   .factory('TicketDeleteFactory', function ($resource) {
-      return $resource('/a/ticket/delete/:ids', {}, {
-          delete: {
-            method: 'POST',
-            params: {ids: '@ids'}
-          }
-      });
+    return $resource('/a/ticket/delete/:ids', {}, {
+      delete: {
+        method: 'POST',
+        params: {ids: '@ids'}
+      }
+    });
   })
   .directive('ngRightClick', function($parse) {
     return function(scope, element, attrs) {
       var fn = $parse(attrs.ngRightClick);
       element.bind('contextmenu', function (event) {
         if (angular.element(event.target).is('a')) {
-          return
+          return;
         }
         scope.$apply(function () {
           event.preventDefault();
@@ -43,10 +43,10 @@ angular.module('frontEndApp')
 
     Ticket.get({}, function (data) {
       $scope.ticket = {};
-      angular.forEach(['type', 'milestone', 'version', 'category'], function (item, i) {
-        var attrName = item + 's'
+      angular.forEach(['type', 'milestone', 'version', 'category'], function (item) {
+        var attrName = item + 's';
         var attrValues = data.result[attrName];
-        angular.forEach(attrValues, function (v, i) {
+        angular.forEach(attrValues, function (v) {
           if (v.default) {
             $scope.ticket[item] = v.name;
           }
@@ -62,7 +62,7 @@ angular.module('frontEndApp')
       $location.path('/');
     };
   })
-  .controller('TicketReadCtrl', function ($scope, $resource, $location) {
+  .controller('TicketReadCtrl', function ($scope, $resource) {
     //Pagination
     $scope.tickets = [];
     $scope.currentPage = 1;
@@ -76,7 +76,7 @@ angular.module('frontEndApp')
         angular.forEach(data.tickets, function (ticket) {
           this.push({
             id: ticket.id,
-            short_id: ticket.id.substring(18, 24),
+            shortId: ticket.id.substring(18, 24),
             type: ticket.type,
             status: '分派',
             priority: '低',
@@ -106,7 +106,7 @@ angular.module('frontEndApp')
     };
     $scope.selectRow = function ($event, $index) {
       if (angular.element($event.target).is('a')) {
-        return
+        return;
       }
 
       if ($scope.firstRowId === null) {
@@ -149,8 +149,8 @@ angular.module('frontEndApp')
     var Ticket = $resource('/a/ticket/update/:id');
     Ticket.get({id: $routeParams.id}, function (data) {
       $scope.ticket = data.result.ticket;
-      $scope.ticket['short_id'] = $scope.ticket.id.substring(18, 24);
-      angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName, i) {
+      $scope.ticket['shortId'] = $scope.ticket.id.substring(18, 24);
+      angular.forEach(['types', 'milestones', 'versions', 'categorys'], function (attrName) {
         $scope[attrName] = data.result[attrName];
       });
       $scope.assigneds = data.result.assigneds;
