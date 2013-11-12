@@ -9,3 +9,5 @@ app/bower_components
 build
 .tox
 *.egg-info
+docs/*.txt
+docs/_build
