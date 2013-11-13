@@ -3,10 +3,19 @@
 
 import datetime
 
+from bson.objectid import ObjectId
+
 from mongokit import Connection, Document as MongokitDocument
 
 
 connection = Connection('mongodb://127.0.0.1')
+
+STATUS = {
+    'todo': 1,
+    'doing': 2,
+    'done': 3,
+    'close': 4,
+}
 
 
 class Document(MongokitDocument):
@@ -24,18 +33,26 @@ class Ticket(Document):
 
     structure = {
         'summary': unicode,
+        'status': int,
+        'created_at': datetime.datetime,
+        'parent_ids': [ObjectId],
+        'child_ids': [ObjectId],
         'description': unicode,
         'type': unicode,
         'milestone': unicode,
         'version': unicode,
         'category': unicode,
         'assigned': unicode,
-        'created_at': datetime.datetime,
+        'ccs': [unicode],
+        'attachments': [unicode],
     }
 
-    required_fields = ['summary', 'created_at']
+    required_fields = ['summary', 'created_at', 'status']
 
-    default_values = {'created_at': datetime.datetime.now}
+    default_values = {
+        'created_at': datetime.datetime.now,
+        'status': STATUS['todo'],
+    }
 
 
 @connection.register
