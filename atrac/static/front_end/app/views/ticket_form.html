@@ -72,10 +72,10 @@
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="inputCC">抄送/跟踪者</label>
+      <label class="control-label">抄送/跟踪者</label>
       <div class="controls">
         <label class="checkbox inline" ng-repeat="cc in ccs">
-          <input type="checkbox" id="inputCC{{ cc }}" value="{{ cc }}" ng-model="ticket.cc">{{ cc }}
+          <input type="checkbox" ng-model="ticket.ccs[cc]">{{ cc }}
         </label>
       </div>
     </div>

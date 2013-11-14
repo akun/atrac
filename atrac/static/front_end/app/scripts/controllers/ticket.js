@@ -1,5 +1,15 @@
 'use strict';
 
+var getCcs = function (ccs) {
+  var ccList = [];
+  angular.forEach(ccs, function (checked, cc) {
+    if (checked) {
+      ccList.push(cc);
+    }
+  });
+  return ccList;
+};
+
 angular.module('frontEndApp')
   .factory('TicketCreateFactory', function ($resource) {
     return $resource('/a/ticket/create', {}, {
@@ -39,10 +49,10 @@ angular.module('frontEndApp')
     };
   })
   .controller('TicketCreateCtrl', function ($scope, $resource, TicketCreateFactory, $location) {
-    var Ticket = $resource('/a/ticket/create');
+    $scope.ticket = {ccs: {}};
 
+    var Ticket = $resource('/a/ticket/create');
     Ticket.get({}, function (data) {
-      $scope.ticket = {};
       angular.forEach(['type', 'milestone', 'version', 'category'], function (item) {
         var attrName = item + 's';
         var attrValues = data.result[attrName];
@@ -58,6 +68,7 @@ angular.module('frontEndApp')
     });
 
     $scope.save = function () {
+      $scope.ticket.ccs = getCcs($scope.ticket.ccs);
       TicketCreateFactory.create($scope.ticket);
       $location.path('/');
     };
@@ -155,7 +166,20 @@ angular.module('frontEndApp')
       });
       $scope.assigneds = data.result.assigneds;
       $scope.ccs = data.result.ccs;
+      var ccs = {};
+      angular.forEach($scope.ccs, function (cc) {
+        var checked = false;
+        angular.forEach($scope.ticket.ccs, function (ccChecked) {
+          if (cc === ccChecked) {
+            checked = true;
+          }
+        });
+        ccs[cc] = checked;
+      });
+      $scope.ticket.ccs = ccs;
+
       $scope.save = function () {
+        $scope.ticket.ccs = getCcs($scope.ticket.ccs);
         TicketUpdateFactory.update($scope.ticket);
         $location.path('/');
       };
