@@ -7,6 +7,7 @@
     "jquery": "~1.9.1",
     "bootstrap-sass": "~2.3.1",
     "es5-shim": "~2.0.8",
+    "angular-file-upload": "~0.2.7",
     "angular-route": "~1.2.0",
     "angular-resource": "~1.0.7",
     "angular-cookies": "~1.0.7",
