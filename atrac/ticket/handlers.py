@@ -2,6 +2,7 @@
 # coding=utf-8
 
 
+import os
 import time
 
 from bson.objectid import ObjectId
@@ -86,6 +87,25 @@ class TicketDeleteHandler(JsonHandler):
     def post(self):
         ticket_ids = [ObjectId(i) for i in self.request.body.split(',')]
         connection.Ticket.collection.remove({'_id': {'$in': ticket_ids}})
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {}
+        })
+        self.write(json_out)
+
+
+class TicketFileUploadHandler(JsonHandler):
+
+    def post(self):
+        base_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        upload_dir = os.path.join(base_dir, 'upload')
+        if not os.path.isdir(upload_dir):
+            os.mkdir(upload_dir)
+
+        for attachment in self.request.files['file']:
+            attachment_path = os.path.join(upload_dir, attachment['filename'])
+            with open(attachment_path, 'w') as attachment_file:
+                attachment_file.write(attachment['body'])
+
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': {}
         })

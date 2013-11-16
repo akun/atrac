@@ -199,7 +199,7 @@ angular.module('frontEndApp')
     // create a uploader with options
     var uploader = $scope.uploader = $fileUploader.create({
       scope: $scope,                          // to automatically update the html. Default: $rootScope
-      url: '/a/ticket/upload',
+      url: '/a/ticket/file_upload',
       formData: [
         { key: 'value' }
       ],
