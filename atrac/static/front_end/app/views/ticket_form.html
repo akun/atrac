@@ -67,7 +67,7 @@
   <div class="span9">
     <div class="control-group">
       <label class="control-label" for="inputFile">附件</label>
-      <div class="controls"  ng-controller="FileUploadCtrl">
+      <div class="controls">
         <input ng-file-select id="inputFile" type="file" multiple  />附件数量：{{ uploader.queue.length }}
         <table class="table">
           <thead>
@@ -82,9 +82,6 @@
               <td><strong>{{ item.file.name }}</strong></td>
               <td nowrap>{{ item.file.size/1024|number:2 }} KB</td>
               <td nowrap>
-                <button type="button" class="btn btn-success btn-mini" ng-click="item.upload()" ng-disabled="item.isUploaded">
-                  <span class="icon-upload icon-white"></span> 上传
-                </button>
                 <button type="button" class="btn btn-danger btn-mini" ng-click="item.remove()">
                   <i class="icon-trash icon-white"></i> 清空
                 </button>

@@ -30,7 +30,9 @@ class TicketCreateHandler(JsonHandler):
             ticket[k] = v
         ticket.save()
         json_out = tornado.escape.json_encode({
-            'code': 0, 'msg': 'success', 'result': {}
+            'code': 0, 'msg': 'success', 'result': {
+                'ticket': {'id': str(ticket['_id'])}
+            }
         })
         self.write(json_out)
 
@@ -95,16 +97,19 @@ class TicketDeleteHandler(JsonHandler):
 
 class TicketFileUploadHandler(JsonHandler):
 
-    def post(self):
+    def post(self, ticket_id):
         base_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         upload_dir = os.path.join(base_dir, 'upload')
         if not os.path.isdir(upload_dir):
             os.mkdir(upload_dir)
 
+        ticket = connection.Ticket.find_one({'_id': ObjectId(ticket_id)})
         for attachment in self.request.files['file']:
             attachment_path = os.path.join(upload_dir, attachment['filename'])
             with open(attachment_path, 'w') as attachment_file:
                 attachment_file.write(attachment['body'])
+            ticket.attachments.append(attachment['filename'])
+        ticket.save()
 
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': {}
