@@ -20,6 +20,7 @@ def get_application():
         [
             (r'/a/ticket/create', ticket_handlers.TicketCreateHandler),
             (r'/a/ticket/read/(?P<page>\d+)/(?P<limit>\d+)', ticket_handlers.TicketReadHandler),
+            (r'/a/ticket/read/(?P<page>\d+)/(?P<limit>\d+)/(?P<keyword>\w+)', ticket_handlers.TicketReadHandler),
             (r'/a/ticket/update/(?P<ticket_id>[0-9a-f]{24})', ticket_handlers.TicketUpdateHandler),
             (r'/a/ticket/delete', ticket_handlers.TicketDeleteHandler),
             (r'/a/ticket/attachment/(?P<ticket_id>[0-9a-f]{24})', ticket_handlers.TicketFileUploadHandler),

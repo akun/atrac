@@ -67,6 +67,20 @@ angular.module('frontEndApp')
       $scope.ccs = data.result.ccs;
     });
 
+    $scope.searchTicket = function () {
+      $scope.tickets = [];
+      var Ticket = $resource('/a/ticket/read/1/10/:keyword');
+      Ticket.get({keyword: $scope.ticket.parent}, function (data) {
+        angular.forEach(data.tickets, function (ticket) {
+          this.push({
+            id: ticket.id,
+            shortId: ticket.id.substring(18, 24),
+            summary: ticket.summary
+          });
+        }, $scope.tickets);
+      });
+    };
+
     $scope.uploader = $fileUploader.create({
       scope: $scope
     });

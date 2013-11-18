@@ -44,7 +44,7 @@
     <div class="control-group">
       <label class="control-label" for="inputParent">父任务</label>
       <div class="controls">
-        <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" ng-model="ticket.parent" />
+        <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" ng-model="ticket.parent" ng-change="searchTicket()" />
       </div>
     </div>
     <div class="control-group">

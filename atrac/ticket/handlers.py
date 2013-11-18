@@ -39,7 +39,7 @@ class TicketCreateHandler(JsonHandler):
 
 class TicketReadHandler(JsonHandler):
 
-    def get(self, page, limit):
+    def get(self, page, limit, keyword=None):
         page, limit = int(page), int(limit)
         count = connection.Ticket.find().count()
         bottom = (page - 1) * limit
@@ -47,7 +47,15 @@ class TicketReadHandler(JsonHandler):
         if top >= count:
             top = count
 
-        tickets = list(connection.Ticket.find().sort(
+        query = {}
+        if keyword:
+            query['$or'] = []
+            for field_name in ('summary', 'description'):
+                query['$or'].append({
+                    field_name: {'$regex': regexp(keyword), '$options': 'i'}
+                })
+
+        tickets = list(connection.Ticket.find(query).sort(
             'created_at', pymongo.DESCENDING
         )[bottom:top])
         for ticket in tickets:
@@ -140,3 +148,18 @@ def get_ticket_item_info():
         'assigneds': [u'<<我>>', 'dev', 'test', 'ops'],
         'ccs': ['dev', 'test', 'ops'],
     }
+
+
+def regexp(q):
+    return q.replace('\\', '\\\\')\
+            .replace('.', '\.')\
+            .replace('*', '\*')\
+            .replace('+', '\+')\
+            .replace('?', '\?')\
+            .replace('[', '\[')\
+            .replace(']', '\]')\
+            .replace('(', '\(')\
+            .replace(')', '\)')\
+            .replace('^', '\^')\
+            .replace('$', '\$')\
+            .replace('|', '\|')
