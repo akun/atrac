@@ -45,6 +45,13 @@
       <label class="control-label" for="inputParent">父任务</label>
       <div class="controls">
         <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" ng-model="ticket.parent" ng-change="searchTicket()" />
+        <div id="parentTicket">
+          <ul class="dropdown-menu">
+            <li ng-repeat="ticket in tickets"><a href="#{{ ticket.shortId }}"><i class="icon-tag"></i>{{ ticket.summary }}</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="icon-chevron-down"></i>更多</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="control-group">

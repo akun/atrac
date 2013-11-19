@@ -31,10 +31,10 @@ body {
   letter-spacing: -1px;
 }
 
-#options {
+#options, #parentTicket {
   position: absolute;
   display: none;
 }
-#options .dropdown-menu {
+#options .dropdown-menu, #parentTicket .dropdown-menu {
   display: block;
 }

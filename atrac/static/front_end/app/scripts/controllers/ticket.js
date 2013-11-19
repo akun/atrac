@@ -68,9 +68,9 @@ angular.module('frontEndApp')
     });
 
     $scope.searchTicket = function () {
-      $scope.tickets = [];
       var Ticket = $resource('/a/ticket/read/1/10/:keyword');
       Ticket.get({keyword: $scope.ticket.parent}, function (data) {
+        $scope.tickets = [];
         angular.forEach(data.tickets, function (ticket) {
           this.push({
             id: ticket.id,
@@ -78,6 +78,12 @@ angular.module('frontEndApp')
             summary: ticket.summary
           });
         }, $scope.tickets);
+        var parentTicket = angular.element('#parentTicket');
+        if ($scope.tickets.length) {
+          parentTicket.show();
+        } else {
+          parentTicket.hide();
+        }
       });
     };
 
