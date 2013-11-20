@@ -74,7 +74,6 @@ angular.module('frontEndApp')
         angular.forEach(data.tickets, function (ticket) {
           this.push({
             id: ticket.id,
-            shortId: ticket.id.substring(18, 24),
             summary: ticket.summary
           });
         }, $scope.tickets);
@@ -86,11 +85,17 @@ angular.module('frontEndApp')
         }
       });
     };
+    $scope.hideParent = function () {
+      var parentTicket = angular.element('#parentTicket');
+      parentTicket.hide();
+    };
+    $scope.addParent = function (ticketId) {
+      $scope.ticket.parent = ticketId;
+    };
 
     $scope.uploader = $fileUploader.create({
       scope: $scope
     });
-
     $scope.save = function () {
       $scope.ticket.ccs = getCcs($scope.ticket.ccs);
       TicketCreateFactory.create($scope.ticket, function (data) {

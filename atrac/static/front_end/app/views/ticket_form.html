@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-click="hideParent()">
   <div class="span9">
     <div class="control-group">
       <label class="control-label" for="inputSummary">概述</label>
@@ -47,7 +47,7 @@
         <input type="text" id="inputParent" placeholder="输入关键词自动显示匹配父任务" ng-model="ticket.parent" ng-change="searchTicket()" />
         <div id="parentTicket">
           <ul class="dropdown-menu">
-            <li ng-repeat="ticket in tickets"><a href="#{{ ticket.shortId }}"><i class="icon-tag"></i>{{ ticket.summary }}</a></li>
+            <li ng-repeat="ticket in tickets"><a ng-click="addParent(ticket.id)"><i class="icon-tag"></i>{{ ticket.summary }}</a></li>
             <li class="divider"></li>
             <li><a href="#"><i class="icon-chevron-down"></i>更多</a></li>
           </ul>
