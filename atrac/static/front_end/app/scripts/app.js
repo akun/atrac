@@ -23,6 +23,10 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.code
         templateUrl: 'views/source_file.html',
         controller: 'SourceFileCtrl'
       })
+      .when('/ci', {
+        templateUrl: 'views/ci.html',
+        controller: 'SourceFileCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
