@@ -93,6 +93,11 @@ angular.module('frontEndApp')
       $scope.ticket.parent = ticketId;
     };
 
+    $scope.showPreview = false;
+    $scope.showPreview = function () {
+      $scope.showPreview = true;
+    };
+
     $scope.uploader = $fileUploader.create({
       scope: $scope
     });

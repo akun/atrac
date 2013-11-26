@@ -1,0 +1,22 @@
+<div class="row" ng-show="showPreview">
+  <div class="span12">
+    <h4>#新建</h4>
+    <h3>{{ ticket.summary }}</h3>
+    <div class="row">
+      <div class="span6">提交者：{{ ticket.reporter }}</div>
+      <div class="span6">分派给：{{ ticket.assigned }}</div>
+    </div>
+    <div class="row">
+      <div class="span6">状态：{{ ticket.status }}</div>
+      <div class="span6">里程碑：{{ ticket.milestone }}</div>
+    </div>
+    <div class="row">
+      <div class="span6">组建：{{ ticket.category }}</div>
+      <div class="span6">版本：{{ ticket.version }}</div>
+    </div>
+  </div>
+  <div class="span12">
+    <h4>描述</h4>
+    <p>{{ ticket.description }}</p>
+  </div>
+</div>

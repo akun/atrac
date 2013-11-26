@@ -5,8 +5,9 @@
     <legend>新建任务单</legend>
     <ng-include src="'views/ticket_form.html'"></ng-include>
     <div class="form-actions">
-      <button type="button" class="btn">预览</button>
+      <button type="button" class="btn" ng-click="showPreview()">预览</button>
       <button type="submit" class="btn btn-primary">创建</button>
     </div>
+    <ng-include src="'views/ticket_preview.html'"></ng-include>
   </fieldset>
 </form>
