@@ -27,6 +27,25 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.code
         templateUrl: 'views/ci.html',
         controller: 'SourceFileCtrl'
       })
+      .when('/admin', {
+        redirectTo: '/admin/type'
+      })
+      .when('/admin/type', {
+        templateUrl: 'views/admin/type.html',
+        controller: 'AdminTypeReadCtrl'
+      })
+      .when('/admin/milestone', {
+        templateUrl: 'views/admin/nav.html',
+        controller: 'AdminCtrl'
+      })
+      .when('/admin/category', {
+        templateUrl: 'views/admin/nav.html',
+        controller: 'AdminCtrl'
+      })
+      .when('/admin/version', {
+        templateUrl: 'views/admin/nav.html',
+        controller: 'AdminCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

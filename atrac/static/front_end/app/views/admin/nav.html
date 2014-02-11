@@ -1,0 +1,8 @@
+<ng-include src="'views/nav.html'"></ng-include>
+
+<ul class="nav nav-tabs" ng-controller="NavCtrl">
+  <li ng-class="{ active: isActive('/admin/type') }"><a href="#/admin/type">任务单类型</a></li>
+  <li ng-class="{ active: isActive('/admin/milestone') }"><a href="#/admin/milestone">里程碑</a></li>
+  <li ng-class="{ active: isActive('/admin/category') }"><a href="#/admin/category">组件类别</a></li>
+  <li ng-class="{ active: isActive('/admin/version') }"><a href="#/admin/version">版本</a></li>
+</ul>

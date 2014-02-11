@@ -8,6 +8,7 @@ import tornado.ioloop
 import tornado.web
 
 from atrac.ticket import handlers as ticket_handlers
+from atrac.type import handlers as type_handlers
 from atrac.versioncontrol import handlers as vs_handlers
 
 
@@ -26,6 +27,8 @@ def get_application():
             (r'/a/ticket/attachment/(?P<ticket_id>[0-9a-f]{24})', ticket_handlers.TicketFileUploadHandler),
 
             (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
+
+            (r'/a/type/read', type_handlers.TypeReadHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
         debug=options.debug,
