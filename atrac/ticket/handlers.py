@@ -126,7 +126,7 @@ class TicketFileUploadHandler(JsonHandler):
 
 
 def serialize_json(ticket):
-    ticket['id'] = str(ticket._id)
+    ticket['id'] = str(ticket['_id'])
     ticket.created_at = time.mktime(ticket.created_at.timetuple())
     del ticket['_id']
 
@@ -152,14 +152,14 @@ def get_ticket_item_info():
 
 def regexp(q):
     return q.replace('\\', '\\\\')\
-            .replace('.', '\.')\
-            .replace('*', '\*')\
-            .replace('+', '\+')\
-            .replace('?', '\?')\
-            .replace('[', '\[')\
-            .replace(']', '\]')\
-            .replace('(', '\(')\
-            .replace(')', '\)')\
-            .replace('^', '\^')\
-            .replace('$', '\$')\
-            .replace('|', '\|')
+            .replace('.', r'\.')\
+            .replace('*', r'\*')\
+            .replace('+', r'\+')\
+            .replace('?', r'\?')\
+            .replace('[', r'\[')\
+            .replace(']', r'\]')\
+            .replace('(', r'\(')\
+            .replace(')', r'\)')\
+            .replace('^', r'\^')\
+            .replace('$', r'\$')\
+            .replace('|', r'\|')
