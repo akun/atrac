@@ -1,6 +1,28 @@
 <ng-include src="'views/admin/nav.html'"></ng-include>
 
 <div ng-controller="AdminTypeReadCtrl">
+  <a href="#/admin/type#addType" class="btn btn-small btn-primary" data-toggle="modal"><i class="icon-plus icon-white"></i>添加</a>
+  <form class="form-horizontal" ng-submit="save()">
+    <div id="addType" class="modal hide fade">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">添加</h3>
+      </div>
+      <div class="modal-body">
+        <div class="control-group">
+          <label class="control-label" for="inputName">名称</label>
+          <div class="controls">
+            <input type="text" id="inputName" ng-model="type.name" required />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary" type="submit">确认</button>
+      </div>
+    </div>
+  </form>
+
   <table id="types" class="table table-hover table-condensed">
     <thead>
       <tr>

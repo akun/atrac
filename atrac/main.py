@@ -28,6 +28,7 @@ def get_application():
 
             (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
 
+            (r'/a/type/create', type_handlers.TypeCreateHandler),
             (r'/a/type/read', type_handlers.TypeReadHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
