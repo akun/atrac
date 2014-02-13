@@ -27,7 +27,7 @@ angular.module('frontEndApp')
     $scope.save = function () {
       TypeCreateFactory.create($scope.type, function (data) {
         var type = data.result.type;
-        $scope.types.push({
+        $scope.types.unshift({
           id: type.id,
           name: type.name
         });
