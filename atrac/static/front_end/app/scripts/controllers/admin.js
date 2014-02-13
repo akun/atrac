@@ -8,10 +8,18 @@ angular.module('frontEndApp')
       }
     });
   })
+  .factory('TypeDeleteFactory', function ($resource) {
+    return $resource('/a/type/delete/:id', {}, {
+      delete: {
+        method: 'POST',
+        params: {id: '@id'}
+      }
+    });
+  })
   .controller('AdminCtrl', function ($scope) {
     $scope.tmp = '';
   })
-  .controller('AdminTypeReadCtrl', function ($scope, $resource, $location, TypeCreateFactory) {
+  .controller('AdminTypeReadCtrl', function ($scope, $resource, $location, TypeCreateFactory, TypeDeleteFactory) {
     var Type = $resource('/a/type/read');
     Type.get({}, function (data) {
       $scope.types = [];
@@ -34,5 +42,11 @@ angular.module('frontEndApp')
         angular.element('#addType').modal('hide');
         $scope.type = {};
       });
+    };
+
+    $scope.delete = function ($index) {
+      var type = $scope.types[$index];
+      TypeDeleteFactory.delete(type.id);
+      $scope.types.splice($index, 1);
     };
   });

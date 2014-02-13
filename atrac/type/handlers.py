@@ -3,6 +3,8 @@
 
 import tornado
 
+from bson.objectid import ObjectId
+
 import pymongo
 
 from atrac.share import JsonHandler
@@ -31,6 +33,17 @@ class TypeReadHandler(JsonHandler):
         types = connection.Type.find().sort('_id', pymongo.DESCENDING)
         types = map(serialize_json, types)
         json_out = tornado.escape.json_encode({'types': types})
+        self.write(json_out)
+
+
+class TypeDeleteHandler(JsonHandler):
+
+    def post(self):
+        type_id = ObjectId(self.request.body)
+        connection.Type.collection.remove({'_id': type_id})
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {}
+        })
         self.write(json_out)
 
 

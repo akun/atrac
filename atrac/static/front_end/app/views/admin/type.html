@@ -27,11 +27,13 @@
     <thead>
       <tr>
         <th>名称</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="type in types">
         <td>{{ type.name }}</td>
+        <td><a href="#/admin/type#deleteType" ng-click="delete($index)">删除</a></td>
       </tr>
     </tbody>
   </table>
