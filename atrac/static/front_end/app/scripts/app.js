@@ -34,6 +34,10 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.code
         templateUrl: 'views/admin/type.html',
         controller: 'AdminTypeReadCtrl'
       })
+      .when('/admin/type/update/:id', {
+        templateUrl: 'views/admin/type_update.html',
+        controller: 'AdminTypeUpdateCtrl'
+      })
       .when('/admin/milestone', {
         templateUrl: 'views/admin/nav.html',
         controller: 'AdminCtrl'

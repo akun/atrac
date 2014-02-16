@@ -36,6 +36,30 @@ class TypeReadHandler(JsonHandler):
         self.write(json_out)
 
 
+class TypeUpdateHandler(JsonHandler):
+
+    def get(self, type_id):
+        type_doc = connection.Type.find_one({'_id': ObjectId(type_id)})
+        serialize_json(type_doc)
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {'type': type_doc}
+        })
+        self.write(json_out)
+
+    def post(self, type_id):
+        json_in = tornado.escape.json_decode(self.request.body)
+        type_doc = connection.Type.find_one({'_id': ObjectId(type_id)})
+        for k, v in json_in.items():
+            if k in ('id',):
+                continue
+            type_doc[k] = v
+        type_doc.save()
+        json_out = tornado.escape.json_encode({
+            'code': 0, 'msg': 'success', 'result': {}
+        })
+        self.write(json_out)
+
+
 class TypeDeleteHandler(JsonHandler):
 
     def post(self):

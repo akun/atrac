@@ -30,6 +30,7 @@ def get_application():
 
             (r'/a/type/create', type_handlers.TypeCreateHandler),
             (r'/a/type/read', type_handlers.TypeReadHandler),
+            (r'/a/type/update/(?P<type_id>[0-9a-f]{24})', type_handlers.TypeUpdateHandler),
             (r'/a/type/delete', type_handlers.TypeDeleteHandler),
         ],
         static_path=os.path.join(os.path.dirname(__file__), 'static'),

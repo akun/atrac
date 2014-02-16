@@ -18,7 +18,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-        <button class="btn btn-primary" type="submit">确认</button>
+        <button class="btn btn-primary" type="submit">确定</button>
       </div>
     </div>
   </form>
@@ -33,7 +33,10 @@
     <tbody>
       <tr ng-repeat="type in types">
         <td>{{ type.name }}</td>
-        <td><a href="#/admin/type#deleteType" ng-click="delete($index)">删除</a></td>
+        <td>
+          <a href="#/admin/type/update/{{ type.id }}">编辑</a>
+          <a href="#/admin/type#deleteType" ng-click="delete($index)">删除</a>
+        </td>
       </tr>
     </tbody>
   </table>
