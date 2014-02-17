@@ -53,6 +53,10 @@ class TypeUpdateHandler(JsonHandler):
             if k in ('id',):
                 continue
             type_doc[k] = v
+        if type_doc.default:
+            connection.Type.find_and_modify({
+                'default': True
+            }, {'$set': {'default': False}}, multi=True)
         type_doc.save()
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': {}

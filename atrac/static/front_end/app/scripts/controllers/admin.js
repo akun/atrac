@@ -27,15 +27,12 @@ angular.module('frontEndApp')
   .controller('AdminCtrl', function ($scope) {
     $scope.tmp = '';
   })
-  .controller('AdminTypeReadCtrl', function ($scope, $resource, TypeCreateFactory, TypeDeleteFactory) {
+  .controller('AdminTypeReadCtrl', function ($scope, $resource, TypeCreateFactory, TypeUpdateFactory, TypeDeleteFactory) {
     var Type = $resource('/a/type/read');
     Type.get({}, function (data) {
       $scope.types = [];
       angular.forEach(data.types, function (type) {
-        this.push({
-          id: type.id,
-          name: type.name
-        });
+        this.push(type);
       }, $scope.types);
     });
 
@@ -50,6 +47,12 @@ angular.module('frontEndApp')
         angular.element('#addType').modal('hide');
         $scope.type = {};
       });
+    };
+
+    $scope.setDefault = function ($index) {
+      var type = $scope.types[$index];
+      type.default = true;
+      TypeUpdateFactory.update(type);
     };
 
     $scope.delete = function ($index) {

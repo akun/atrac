@@ -27,12 +27,14 @@
     <thead>
       <tr>
         <th>名称</th>
+        <th>默认</th>
         <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="type in types">
         <td>{{ type.name }}</td>
+        <td><input type="radio" ng-checked="{{ type.default }}" name="default" ng-click="setDefault($index)" /></td>
         <td>
           <a href="#/admin/type/update/{{ type.id }}">编辑</a>
           <a href="#/admin/type#deleteType" ng-click="delete($index)">删除</a>
