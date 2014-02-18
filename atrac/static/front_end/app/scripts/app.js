@@ -16,11 +16,11 @@ angular.module('frontEndApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.code
         controller: 'TicketUpdateCtrl'
       })
       .when('/source', {
-        templateUrl: 'views/source.html',
+        templateUrl: 'views/source/source.html',
         controller: 'SourceCtrl'
       })
       .when('/source/path/:path*', {
-        templateUrl: 'views/source_file.html',
+        templateUrl: 'views/source/source_file.html',
         controller: 'SourceFileCtrl'
       })
       .when('/ci', {

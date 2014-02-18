@@ -14,6 +14,7 @@ from atrac.versioncontrol import handlers as vs_handlers
 
 define('port', default=8888, help='run on the given port', type=int)
 define('debug', default=False, help='run on the debug mode', type=bool)
+define('repos', default='/path/to/svn', help='subversion URL', type=str)
 
 
 def get_application():
@@ -26,7 +27,8 @@ def get_application():
             (r'/a/ticket/delete', ticket_handlers.TicketDeleteHandler),
             (r'/a/ticket/attachment/(?P<ticket_id>[0-9a-f]{24})', ticket_handlers.TicketFileUploadHandler),
 
-            (r'/a/source/file/(?P<path>.*)', vs_handlers.SourceFileHandler),
+            (r'/a/source/read', vs_handlers.SourceReadHandler),
+            (r'/a/source/read/(?P<path>.*)', vs_handlers.SourceReadHandler),
 
             (r'/a/type/create', type_handlers.TypeCreateHandler),
             (r'/a/type/read', type_handlers.TypeReadHandler),
