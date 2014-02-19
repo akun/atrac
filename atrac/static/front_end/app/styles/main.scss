@@ -38,3 +38,16 @@ body {
 #options .dropdown-menu, #parentTicket .dropdown-menu {
   display: block;
 }
+
+.source .table {
+  margin-bottom: 0;
+}
+.source .table tbody+tbody {
+  border-top: 0;
+}
+.source .table-condensed td {
+  padding: 0;
+}
+.source .none-border {
+  border: 0;
+}

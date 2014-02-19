@@ -1,0 +1,15 @@
+<tr>
+  <td><a href="{{ node.url }}" ng-click="toggle(node)"><i class="{{ node.icon }}"></i>{{ node.name }}</a></td>
+  <td>{{ node.size }}</td>
+  <td>{{ node.revision }}</td>
+  <td>{{ node.age }}</td>
+  <td>{{ node.lastAuthor }}</td>
+  <td>{{ node.log }}</td>
+</tr>
+<tr ng-show="node.isVisible">
+  <td colspan="6" class="none-border">
+    <table class="table table-hover table-condensed">
+      <tbody ng-repeat="node in node.subNodes" ng-include="'views/source/tree_node.html'"></tbody>
+    </table>
+  </td>
+</tr>

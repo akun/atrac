@@ -1,7 +1,8 @@
 <ng-include src="'views/nav.html'"></ng-include>
 
+<div class="source">
 <h2>源码：</h2>
-<table id="tickets" class="table table-hover table-condensed">
+<table class="table table-hover table-condensed">
   <thead>
     <tr>
       <th>名称</th>
@@ -12,22 +13,6 @@
       <th>最近变更</th>
     </tr>
   </thead>
-  <tbody ng-repeat="node in nodes">
-    <tr>
-      <td><a href="#/source" ng-click="toggle(node)"><i class="icon-folder-close"></i>{{ node.name }}</a></td>
-      <td>{{ node.size }}</td>
-      <td>{{ node.revision }}</td>
-      <td>{{ node.age }}</td>
-      <td>{{ node.lastAuthor }}</td>
-      <td>{{ node.log }}</td>
-    </tr>
-    <tr ng-show="node.isVisible" ng-repeat="subNode in node.subNodes">
-      <td>&nbsp;&nbsp;<a href="#/source/path/{{ subNode.path }}" ng-click="toggle(node)"><i class="{{ subNode.icon }}"></i>{{ subNode.name }}</a></td>
-      <td>{{ subNode.size }}</td>
-      <td>{{ subNode.revision }}</td>
-      <td>{{ subNode.age }}</td>
-      <td>{{ subNode.lastAuthor }}</td>
-      <td>{{ subNode.log }}</td>
-    </tr>
-  </tbody>
+  <tbody ng-repeat="node in nodes" ng-include="'views/source/tree_node.html'"></tbody>
 </table>
+</div>
