@@ -24,7 +24,6 @@ class SourceReadHandler(JsonHandler):
                     'path': code.file_path,
                     'kind': code.kind,
                 })
-        print result
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': result
         })
