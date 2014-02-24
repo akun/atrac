@@ -39,6 +39,9 @@ body {
   display: block;
 }
 
+.source {
+  overflow: hidden;
+}
 .source .table {
   margin-bottom: 0;
 }
@@ -50,4 +53,7 @@ body {
 }
 .source .none-border {
   border: 0;
+}
+.source .indent {
+  margin-left: 20px;
 }
