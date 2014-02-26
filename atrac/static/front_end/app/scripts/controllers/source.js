@@ -33,7 +33,7 @@ angular.module('frontEndApp')
       });
     };
   })
-  .controller('SourceFileCtrl', function ($scope, $routeParams, $resource) {
+  .controller('SourceFileCtrl', function ($scope, $routeParams, $resource, $window) {
     $scope.editorOptions = {
       lineWrapping : true,
       lineNumbers: true,
@@ -43,6 +43,11 @@ angular.module('frontEndApp')
 
     var Source = $resource('/a/source/read/:path', {path: '@path'});
     Source.get({path: $routeParams.path}, function (data) {
+      angular.forEach($window.CodeMirror.modeInfo, function (item) {
+        if (item.mime === data.result.mimetype) {
+          $scope.editorOptions.mode = item.mode;
+        }
+      });
       $scope.code = data.result.content;
     });
   });
