@@ -15,7 +15,7 @@ KIND_MAP = {
 }
 
 
-def get_code(path, file_path, rev):
+def get_code(path, file_path, rev=None):
     node = SubversionNode(path, file_path, rev)
     if node.kind == FILE:
         return FILE, node.get_file()
@@ -27,9 +27,8 @@ def get_code(path, file_path, rev):
 
 class SubversionNode(object):
 
-    def __init__(self, path, file_path, rev):
+    def __init__(self, path, file_path, rev=None):
         self.file_path = file_path
-        self.rev = rev
         self.path = path
 
         repos_path = core.svn_path_canonicalize(
@@ -37,6 +36,10 @@ class SubversionNode(object):
         )
         svn_repos = repos.svn_repos_open(repos_path)
         fs_ptr = repos.svn_repos_fs(svn_repos)
+        if rev:
+            self.rev = rev
+        else:
+            self.rev = fs.youngest_rev(fs_ptr)
         self.root = fs.revision_root(fs_ptr, self.rev)
         self.kind = KIND_MAP[fs.check_path(self.root, self.file_path)]
         self.name = os.path.split(self.file_path)[-1]

@@ -16,7 +16,7 @@ class SourceReadHandler(JsonHandler):
     def get(self, path=None):
         full_path = path if path else ''
         result = {}
-        code_kind, code_info = get_code(options.repos, full_path, 4)
+        code_kind, code_info = get_code(options.repos, full_path)
         if code_kind == FILE:
             result = {
                 'content': code_info,
