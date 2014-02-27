@@ -43,6 +43,11 @@ class SubversionNode(object):
         self.root = fs.revision_root(fs_ptr, self.rev)
         self.kind = KIND_MAP[fs.check_path(self.root, self.file_path)]
         self.name = os.path.split(self.file_path)[-1]
+        self.cr = fs.node_created_rev(self.root, self.file_path)
+        props = fs.revision_proplist(fs_ptr, self.cr)
+        self.date = props[core.SVN_PROP_REVISION_DATE]
+        self.author = props[core.SVN_PROP_REVISION_AUTHOR]
+        self.log = props[core.SVN_PROP_REVISION_LOG]
 
     def get_file(self):
         stream = core.Stream(fs.file_contents(self.root, self.file_path))

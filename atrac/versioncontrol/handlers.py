@@ -29,6 +29,10 @@ class SourceReadHandler(JsonHandler):
                     'name': code.name,
                     'path': code.file_path,
                     'kind': code.kind,
+                    'revision': code.cr,
+                    'date': code.date,
+                    'author': code.author,
+                    'log': code.log,
                 })
         json_out = tornado.escape.json_encode({
             'code': 0, 'msg': 'success', 'result': result
